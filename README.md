@@ -18,12 +18,12 @@ TH = 10
 
 ## Environment
 
-python 3.9
+python 3.8
 
 ## Environment Setting
 
 ```bash
-conda activate SurveillanceCamera
+source env/bin/activate
 ```
 
 ## Requirements
