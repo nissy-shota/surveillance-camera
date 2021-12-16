@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+    app:
+        build: .
+        volumes:
+            - '.:/workdir'
+            - '/tmp/.X11-unix:/tmp/.X11-unix:rw'
+        devices:
+            - '/dev/video0:/dev/video0'
+        environment:
+            - 'DISPLAY=$DISPLAY'
+        tty: true
+        stdin_open: true
