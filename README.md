@@ -7,6 +7,7 @@
 ```bash
 /home/shota/Projects/surveillance-camera/main.py
 ```
+main.pyでリアルタイム画像を読み込んでいます．
 
 ```bash
 /home/shota/Projects/surveillance-camera/config.yaml
