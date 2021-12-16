@@ -1,30 +1,18 @@
 # surveillance-camera
 
+## frame difference method
 
+フレーム間差分法の実装  
 
+```bash
+/home/shota/Projects/surveillance-camera/main.py
+```
 
+```bash
+/home/shota/Projects/surveillance-camera/config.yaml
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+TH = 10  
 
 
 ## Environment
@@ -39,4 +27,4 @@ conda activate SurveillanceCamera
 
 ## Requirements
 When the prototype is done, 
-We will add the conda yaml or requirements.txt to the repository.
+We will add the conda yaml or requirements.txt to the repository.  
