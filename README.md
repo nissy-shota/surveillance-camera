@@ -27,3 +27,10 @@ python 3.8
 ## Requirements
 When the prototype is done,  
 We will add the requirements.txt to the repository.  
+
+## Docker
+
+```bash
+docker build .
+-device /dev/video0:/dev/video0 08d75befbfff [image id]
+```
