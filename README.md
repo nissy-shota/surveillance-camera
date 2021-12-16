@@ -34,3 +34,8 @@ We will add the requirements.txt to the repository.
 docker build .
 -device /dev/video0:/dev/video0 08d75befbfff [image id]
 ```
+
+## Docker Compose
+```bash
+docker-compose up --build -d
+```
