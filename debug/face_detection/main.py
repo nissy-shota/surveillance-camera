@@ -1,29 +1,17 @@
 import os
-
-from facenet_pytorch import MTCNN, InceptionResnetV1
-import matplotlib.pyplot as plt
-from PIL import Image
-import numpy as np
-
+from face_detector import FaceDetector
 
 IMG_DIR = '/home/shota/Projects/surveillance-camera/debug/face_detection/img'
+RESULTS_DIR = '/home/shota/Projects/surveillance-camera/debug/face_detection/results'
 
 def main():
 
-    mtcnn = MTCNN()
-    resnet = InceptionResnetV1(pretrained='vggface2').eval()
-
-    image_path = os.path.join(IMG_DIR, 'tubasa.jpg')
-    img = Image.open(image_path)
-    img_cropped = mtcnn(img)
-
-    detected_img = img_cropped.to('cpu').detach().numpy().copy()
-    detected_img = np.transpose(detected_img, (1, 2, 0))
-    print(detected_img.shape)
-    plt.imshow(detected_img)
-    plt.show()
-
-
+    sample_img_path = os.path.join(IMG_DIR, 'tubasa.jpg')
+    detector = FaceDetector(sample_img_path)
+    detector.detecte_face()
+    save_path = os.path.join(RESULTS_DIR, 'clopped.jpg')
+    detector.save(save_path)
+    detector.show()
 
 
 if __name__ == "__main__":
