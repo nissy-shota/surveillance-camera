@@ -14,21 +14,22 @@ class LineSender():
     >>> line_sender = LineSender(LINE_ACCESS_TOKEN, LINE_USER_ID)
 
     >>> msg = 'Hello Beautifule world.'
-    >>> line_sender.send_to_line(msg)
+    >>> line_sender.send_to_line()
     '''
 
     def __init__(self, LINE_ACCESS_TOKEN, LINE_USER_ID):
         self.LINE_ACCESS_TOKEN = LINE_ACCESS_TOKEN
         self.LINE_USER_ID = LINE_USER_ID
 
-    def send_to_line(self, msg):
+    def send_to_line(self):
         '''
         This function actually sends a message to the line.
-        :param str: Message to send to line.
         :return: none
+
+        msg : the text must be in list.
         '''
 
-        texts = ['不審者発見！！！']
+        msg = ['不審者発見！！！']
 
         #TODO(shota.nishiyama44@gmail.com): send jpg
 
@@ -38,5 +39,5 @@ class LineSender():
         # )
 
         line_bot.push_message(
-            os.getenv("LINE_USER_ID"), TextSendMessage(text="\n".join(texts))
+            os.getenv("LINE_USER_ID"), TextSendMessage(text="\n".join(msg))
         )
