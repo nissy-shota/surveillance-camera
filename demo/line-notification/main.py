@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 
 from sender import LineSender
 
+
 def main():
 
     load_dotenv(verbose=True)
@@ -13,6 +14,7 @@ def main():
     print(f'LINE_ACCESS_TOKEN{LINE_ACCESS_TOKEN}, LINE_USER_ID{LINE_USER_ID}')
     line_sender = LineSender(LINE_ACCESS_TOKEN, LINE_USER_ID)
     line_sender.send_to_line()
+
 
 if __name__ == "__main__":
     main()
