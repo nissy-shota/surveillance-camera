@@ -17,4 +17,3 @@ class FaceIdentificator:
         embedding_vector = resnet(self.detected_face.unsqueeze(0))
 
         return embedding_vector
-
