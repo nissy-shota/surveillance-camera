@@ -4,6 +4,7 @@
 
 import gc
 import os
+import time
 
 from face_detector_deep import FaceDetector
 from face_indentification import FaceIdentificator
@@ -57,4 +58,7 @@ def main():
 
 
 if __name__ == "__main__":
+    start = time.time()
     main()
+    elapsed_time = time.time() - start
+    print ("elapsed_time:{0}".format(elapsed_time) + "[sec]")
