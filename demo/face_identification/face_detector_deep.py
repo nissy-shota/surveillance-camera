@@ -16,7 +16,7 @@ class FaceDetector:
 
     Examples:
         >>> detector = FaceDetector(image_path)
-        >>> detector.detecte_face()
+        >>> img_cropped = detector.detecte_face()
         >>> detector.save()
         >>> detector.show()
     '''
@@ -48,6 +48,7 @@ class FaceDetector:
         cv2.imwrite(save_path, self.detected_img)
 
     def show(self):
+
         '''
         show face image
         Args: save_path
