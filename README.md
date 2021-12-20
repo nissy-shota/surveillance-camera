@@ -32,7 +32,7 @@ We will add the requirements.txt to the repository.
 
 ```bash
 docker build .
-docker run -it -v $(pwd):/workdir --env="DISPLAY=$DISPLAY" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" --device /dev/video0:/dev/video0 08d75befbfff```
+docker run -it -v $(pwd):/workdir --env="DISPLAY=$DISPLAY" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" --device /dev/video0:/dev/video0 [image id]```
 
 ## Docker Compose
 ```bash
