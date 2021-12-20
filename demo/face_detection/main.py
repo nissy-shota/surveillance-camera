@@ -1,8 +1,8 @@
 import os
 from face_detector_deep import FaceDetector
 
-IMG_DIR = '/home/shota/Projects/surveillance-camera/debug/face_detection/img'
-RESULTS_DIR = '/home/shota/Projects/surveillance-camera/debug/face_detection/results'
+IMG_DIR = '/home/shota/Projects/surveillance-camera/demo/face_detection/img'
+RESULTS_DIR = '/home/shota/Projects/surveillance-camera/demo/face_detection/results'
 
 def main():
 
