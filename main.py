@@ -14,7 +14,7 @@ def main():
 
     #TODO(shota.nishyama44@gmail.com): frame difference method
     # real time capture
-    cap = cv2.VideoCapture(-1)
+    cap = cv2.VideoCapture(0)
     if not cap.isOpened():
         return
 
