@@ -59,17 +59,20 @@ def main():
             # Deep
             if is_deep:
                 # face detection
+                print('face detecting...')
                 detector = FaceDetector(curr_img)
                 cropped_face_img = detector.detecte_face()
                 detector.show()
                 del detector
                 gc.collect()
                 # feature extraction
+                print('feature extraction...')
                 feature_extractor = FaceFeatureExtractor(cropped_face_img)
                 face_embedding_vector1 = feature_extractor.feature_extraction()
                 del feature_extractor
                 gc.collect()
                 # face identficate between 2 images.
+                print('face identification...')
                 face_identificator = FaceIdentificator(face_embedding_vector1, face_embedding_vector1)
                 degree_of_similarity = face_identificator.identfy()
                 # print(f'degree of similarity is {degree_of_similarity:.4} between {file_name1} and {file_name2}.')
