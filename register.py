@@ -40,19 +40,24 @@ class FaceRegister:
         '''
 
         files = [filename for filename in os.listdir(self.faces_directory_path) if not filename.startswith('.')]
-        extension = 'jpg'
+        extension = '.jpg'
         for file in files:
             file_suffix = pathlib.PurePath(file).suffix
-            if file_suffix == 'jpeg' or 'JPG':
+
+            if file_suffix == ('.jpeg' or '.JPG'):
                 file_name = pathlib.PurePath(file).stem
                 jpg_file = file_name + extension
-                shutil.move(file, jpg_file)
-            if file_suffix == 'png' or 'PNG':
+                save_path = os.path.join(self.faces_directory_path, jpg_file)
+                original_path = os.path.join(self.faces_directory_path, file)
+                shutil.move(original_path, save_path)
+
+            if file_suffix == ('.png' or '.PNG'):
                 file_name = pathlib.PurePath(file).stem
                 im = Image.open(file)
                 im = im.convert("RGB")
                 jpg_file = file_name + extension
-                im.save(jpg_file)
+                save_path = os.path.join(self.faces_directory_path, jpg_file)
+                im.save(save_path)
 
     def search_face_files(self) -> List[str]:
         '''
@@ -81,20 +86,25 @@ class FaceRegister:
         '''
 
         for file in files:
-
-            img = cv2.imread(file)
-            detector = FaceDetector(img)
+            file_path = os.path.join(self.faces_directory_path, file)
+            img = cv2.imread(file_path)
+            image = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            detector = FaceDetector(image)
             cropped_face_img = detector.detecte_face()
             del detector
             gc.collect()
 
+            if cropped_face_img is None:
+                continue
+
+
             # face feature extraction
             feature_extractor = FaceFeatureExtractor(cropped_face_img)
             face_embedding_vector = feature_extractor.feature_extraction()
+            face_embedding_vector = face_embedding_vector.squeeze().to('cpu').detach().numpy().copy()
             del feature_extractor
             gc.collect()
 
             file_name = pathlib.PurePath(file).stem
             file_name = file_name + '.npy'
-            save_path = os.path.join(save_path, file_name)
-            np.save('save_path', face_embedding_vector)
+            np.save(os.path.join(save_path, file_name), face_embedding_vector)
