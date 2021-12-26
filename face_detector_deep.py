@@ -21,8 +21,8 @@ class FaceDetector:
         >>> detector.show()
     '''
 
-    def __init__(self, img_path):
-        self.img_path = img_path
+    def __init__(self, img: np.array):
+        self.img = img
 
     def detecte_face(self):
         '''
@@ -32,7 +32,7 @@ class FaceDetector:
         '''
 
         mtcnn = MTCNN()
-        self.img = Image.open(self.img_path)
+        self.img = Image.fromarray(self.img)
         self.img_cropped = mtcnn(self.img)
 
         return self.img_cropped
