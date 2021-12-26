@@ -1,14 +1,17 @@
 #  Copyright (c) 2021 by Shota NISHIYAMA
 import argparse
 import gc
+import os
 import sys
 
 import cv2
 
-from util import load_yaml
+from dotenv import load_dotenv
 from face_detector_deep import FaceDetector
 from face_indentification import FaceIdentificator
 from face_indentification import FaceFeatureExtractor
+from sender import LineSender
+from util import load_yaml
 
 
 def main():
@@ -22,6 +25,11 @@ def main():
     config = load_yaml(config_yaml_file_path)
     threshold = config['threshold_of_frame_difference_method']
     mask_threshold = config['threshold_of_number_of_white_pixel']
+    threshold_of_degree_of_similarity = config['threshold_of_degree_of_similarity']
+    # load env
+    load_dotenv(verbose=True)
+    LINE_ACCESS_TOKEN = os.getenv("LINE_ACCESS_TOKEN")
+    LINE_USER_ID = os.getenv("LINE_USER_ID")
 
     # real time capture
     cap = cv2.VideoCapture(-1)
@@ -74,7 +82,10 @@ def main():
                 '''
                 pass
 
-            if
+            if degree_of_similarity < threshold_of_degree_of_similarity:
+                msg = '不審者発見'
+                line_sender = LineSender(LINE_ACCESS_TOKEN, LINE_USER_ID)
+                line_sender.send_to_line(msg)
 
         prev_gray = curr_gray
         del curr_gray
