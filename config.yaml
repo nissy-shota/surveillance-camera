@@ -1,3 +1,4 @@
 threshold_of_frame_difference_method: 30
 threshold_of_number_of_white_pixel: 1
+threshold_of_degree_of_similarity: 0.7
 sampling_cycle: 1
