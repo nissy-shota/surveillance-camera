@@ -30,7 +30,6 @@ class FaceDetector:
         Args: None
         return: cropped image
         '''
-
         mtcnn = MTCNN()
         self.img = Image.fromarray(self.img)
         self.img_cropped = mtcnn(self.img)
