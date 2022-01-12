@@ -85,9 +85,8 @@ def main():
                 haar_detector = HaarFaceDetector('./models/haarcascade_frontalface_default.xml')
                 cropped_face_img = haar_detector.getFaceImage(curr_img)
                 if cropped_face_img is not None:
-                    break
-                # TODO Template needs to be specified.
-                degree_of_similarity = get_face_similarity(cropped_face_img, "")
+                    # TODO Template needs to be specified.
+                    degree_of_similarity = get_face_similarity(cropped_face_img, "")
                 
                 pass
             print(degree_of_similarity)
