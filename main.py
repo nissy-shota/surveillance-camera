@@ -33,7 +33,7 @@ def main():
         mask = cv2.absdiff(curr_gray, prev_gray)
         mask[mask < threshold] = 0
         mask[mask >= threshold] = 255
-
+        
         cv2.imshow("Mask", mask)
 
         prev_gray = curr_gray

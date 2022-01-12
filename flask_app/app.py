@@ -7,10 +7,10 @@ app = Flask(__name__)
 def top():
     return render_template("top.html")
 
-@app.route("/check")
-def check():
-    cp = subprocess.Popen(["python", "test.py"])
-    return render_template("check.html")
+@app.route("/capture")
+def capture():
+    cp = subprocess.Popen(["python", "../main.py"])
+    return render_template("capture.html")
 
 if __name__ == '__main__':
     app.run(debug=True,  host='0.0.0.0', port=8888) # ポートの変更
