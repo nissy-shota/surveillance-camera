@@ -86,6 +86,7 @@ def main():
                 cropped_face_img = haar_detector.getFaceImage(curr_img)
                 if cropped_face_img is not None:
                     break
+                # TODO Template needs to be specified.
                 degree_of_similarity = get_face_similarity(cropped_face_img, "")
                 
                 pass
