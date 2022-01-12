@@ -13,9 +13,8 @@ class FaceDetector:
         img (PIL): PIL Object which has range (-1, 1)
         img_cropped(tensor): cropped img by mtcnn
         detected_img(numpy array): detecte face image which has range (-1, 1)
-
     Examples:
-        >>> detector = FaceDetector(image_path)
+        >>> detector = FaceDetector(image)
         >>> img_cropped = detector.detecte_face()
         >>> detector.save()
         >>> detector.show()
