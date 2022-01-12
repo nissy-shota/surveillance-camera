@@ -1,18 +1,21 @@
 #  Copyright (c) 2021 by Shota NISHIYAMA
 import argparse
 import gc
+import os
 import sys
 
 import cv2
 
-from util import load_yaml
+from dotenv import load_dotenv
 from face_detector_deep import FaceDetector
 from face_indentification import FaceIdentificator
 from face_indentification import FaceFeatureExtractor
+from sender import LineSender
+from util import load_yaml
 
 
 def main():
-
+    # argument
     parser = argparse.ArgumentParser(description='surveillance-came args')
     parser.add_argument('--deep', action='store_true')
     args = parser.parse_args()
@@ -22,6 +25,12 @@ def main():
     config = load_yaml(config_yaml_file_path)
     threshold = config['threshold_of_frame_difference_method']
     mask_threshold = config['threshold_of_number_of_white_pixel']
+    threshold_of_degree_of_similarity = config['threshold_of_degree_of_similarity']
+    degree_of_similarity = 0
+    # load env
+    load_dotenv(verbose=True)
+    LINE_ACCESS_TOKEN = os.getenv("LINE_ACCESS_TOKEN")
+    LINE_USER_ID = os.getenv("LINE_USER_ID")
 
     # real time capture
     cap = cv2.VideoCapture(-1)
@@ -47,34 +56,36 @@ def main():
 
         if number_of_white_pixel > mask_threshold:
             cv2.imshow("curr_img", curr_img)
-
             # Deep
             if is_deep:
-
                 # face detection
+                print('face detecting...')
                 detector = FaceDetector(curr_img)
                 cropped_face_img = detector.detecte_face()
                 detector.show()
                 del detector
                 gc.collect()
-
                 # feature extraction
+                print('feature extraction...')
                 feature_extractor = FaceFeatureExtractor(cropped_face_img)
                 face_embedding_vector1 = feature_extractor.feature_extraction()
                 del feature_extractor
                 gc.collect()
-
                 # face identficate between 2 images.
+                print('face identification...')
                 face_identificator = FaceIdentificator(face_embedding_vector1, face_embedding_vector1)
                 degree_of_similarity = face_identificator.identfy()
                 # print(f'degree of similarity is {degree_of_similarity:.4} between {file_name1} and {file_name2}.')
             else:
                 '''
-                TODO Shoma Kato: Develop classical algorithm
+                TODO Shoma Kato: Develop classical detection, recognition and identification algorithm.
                 '''
                 pass
-
-            if
+            print(degree_of_similarity)
+            if degree_of_similarity < threshold_of_degree_of_similarity:
+                msg = '不審者発見'
+                # line_sender = LineSender(LINE_ACCESS_TOKEN, LINE_USER_ID)
+                # line_sender.send_to_line(msg)
 
         prev_gray = curr_gray
         del curr_gray
