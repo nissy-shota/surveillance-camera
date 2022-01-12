@@ -7,6 +7,8 @@ import sys
 import cv2
 
 from dotenv import load_dotenv
+from akaze_feature_matching import get_face_similarity
+from face_detector import HaarFaceDetector
 from face_detector_deep import FaceDetector
 from face_indentification import FaceIdentificator
 from face_indentification import FaceFeatureExtractor
@@ -80,6 +82,13 @@ def main():
                 '''
                 TODO Shoma Kato: Develop classical detection, recognition and identification algorithm.
                 '''
+                haar_detector = HaarFaceDetector('./models/haarcascade_frontalface_default.xml')
+                cropped_face_img = haar_detector.getFaceImage(curr_img)
+                if cropped_face_img is not None:
+                    break
+                # TODO Template needs to be specified.
+                degree_of_similarity = get_face_similarity(cropped_face_img, "")
+                
                 pass
             print(degree_of_similarity)
             if degree_of_similarity < threshold_of_degree_of_similarity:
