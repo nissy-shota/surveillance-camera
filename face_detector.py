@@ -1,6 +1,6 @@
 import cv2
 
-class FaceDetector:
+class HaarFaceDetector:
     
     # 顔検出モデルのパス
     cascade_path = ""
