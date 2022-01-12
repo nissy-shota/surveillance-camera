@@ -17,9 +17,10 @@ class LineSender():
     >>> line_sender.send_to_line()
     '''
 
-    def __init__(self, LINE_ACCESS_TOKEN, LINE_USER_ID):
+    def __init__(self, LINE_ACCESS_TOKEN, LINE_USER_ID, msg):
         self.LINE_ACCESS_TOKEN = LINE_ACCESS_TOKEN
         self.LINE_USER_ID = LINE_USER_ID
+        self.msg = msg
 
     def send_to_line(self):
         '''
@@ -29,7 +30,6 @@ class LineSender():
         msg : the text must be in list.
         '''
 
-        msg = ['不審者発見！！！']
 
         #TODO(shota.nishiyama44@gmail.com): send jpg
 
@@ -39,5 +39,5 @@ class LineSender():
         # )
 
         line_bot.push_message(
-            os.getenv("LINE_USER_ID"), TextSendMessage(text="\n".join(msg))
+            os.getenv("LINE_USER_ID"), TextSendMessage(text="\n".join(self.msg))
         )

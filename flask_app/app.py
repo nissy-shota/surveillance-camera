@@ -9,7 +9,7 @@ def top():
 
 @app.route("/capture")
 def capture():
-    cp = subprocess.Popen(["python", "main.py"])
+    cp = subprocess.Popen(["python", "main.py", "--deep"])
     return render_template("capture.html")
 
 if __name__ == '__main__':
