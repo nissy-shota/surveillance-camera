@@ -1,0 +1,4 @@
+name: surverillance-camera
+channels:
+  - defaults
+prefix: /home/shota/anaconda3/envs/surverillance-camera
