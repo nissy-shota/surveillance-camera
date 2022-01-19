@@ -15,6 +15,12 @@ main.pyでリアルタイム画像を読み込んでいます．
 
 ## Environment
 
+### Environment Create
+
+'''bash
+conda env create -f=environment_nishiyama.yaml
+'''
+
 ### Environment Setting
 
 We're using the virtual env  
