@@ -7,8 +7,13 @@ app = Flask(__name__)
 def top():
     return render_template("top.html")
 
-@app.route("/capture")
-def capture():
+@app.route("/capture_akaze")
+def capture_akaze():
+    cp = subprocess.Popen(["python", "main.py"])
+    return render_template("capture.html")
+
+@app.route("/capture_deep")
+def capture_deep():
     cp = subprocess.Popen(["python", "main.py", "--deep"])
     return render_template("capture.html")
 
