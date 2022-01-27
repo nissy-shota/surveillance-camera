@@ -1,6 +1,8 @@
 #  Copyright (c) 2021 by Shota NISHIYAMA
 import argparse
+from distutils.command import register
 import gc
+from multiprocessing import managers
 import os
 import sys
 
@@ -12,9 +14,15 @@ from face_detector import HaarFaceDetector
 from face_detector_deep import FaceDetector
 from face_indentification import FaceIdentificator
 from face_indentification import FaceFeatureExtractor
+from manager import FaceIdentificationManager
 from sender import LineSender
 from util import load_yaml
+from register import FaceRegister
 
+def regist():
+    register = FaceRegister()
+    files = register.search_face_files()
+    register.save_feature_vector(files, "./images/Face_Vectors")
 
 def main():
     # argument
@@ -65,7 +73,12 @@ def main():
                 print('face detecting...')
                 detector = FaceDetector(curr_img)
                 cropped_face_img = detector.detecte_face()
-                detector.show()
+                # No face was detected.
+                if cropped_face_img is None:
+                    print("None")
+                    continue
+                
+                # detector.show()
                 del detector
                 gc.collect()
                 # feature extraction
@@ -75,10 +88,14 @@ def main():
                 del feature_extractor
                 gc.collect()
                 # face identficate between 2 images.
-                print('face identification...')
-                face_identificator = FaceIdentificator(face_embedding_vector1, face_embedding_vector1)
-                degree_of_similarity = face_identificator.identfy()
-                # print(f'degree of similarity is {degree_of_similarity:.4} between {file_name1} and {file_name2}.')
+                manager = FaceIdentificationManager(face_embedding_vector1)
+                degree_of_similarity = manager.identification()
+                
+                if degree_of_similarity < threshold_of_degree_of_similarity:
+                    msg = '不審者発見'
+                    # line_sender = LineSender(LINE_ACCESS_TOKEN, LINE_USER_ID)
+                    # line_sender.send_to_line(msg)
+                    print(msg)
             else:
                 '''
                 TODO Shoma Kato: Develop classical detection, recognition and identification algorithm.
@@ -108,4 +125,5 @@ def main():
 
 
 if __name__ == "__main__":
+    # regist()
     main()
