@@ -1,6 +1,8 @@
 import cv2
 import glob
 
+from torch import le
+
 # get_face_similarity(対象の顔画像, テンプレートのディレクトリパス) -> 類似度を返す
 def get_face_similarity(target_image, template_dir):
     
@@ -41,6 +43,9 @@ def get_face_similarity(target_image, template_dir):
             
         except cv2.error:
             similarity_list.append(10000)
+    
+    if len(similarity_list) == 0:
+        return -1
     
     #　一番似てる画像の類似度を返す
     return min(similarity_list)
