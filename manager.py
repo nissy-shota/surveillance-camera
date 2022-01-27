@@ -5,7 +5,9 @@
 import os
 from typing import List
 
+import matplotlib.pyplot as plt
 import numpy as np
+import torch
 
 from face_indentification import FaceIdentificator
 
@@ -23,7 +25,8 @@ class FaceIdentificationManager:
         return face_vector_files
 
     def identification(self):
-
+        
+        degree_of_similarity_list = []
         face_vector_files = self.get_registered_embedding_vector_files()
         for face_vector_file in face_vector_files:
 
@@ -36,9 +39,13 @@ class FaceIdentificationManager:
             except ValueError as e:
                 print('The file contains an object array, but allow_pickle=False given.')
                 continue
-
-        face_identificator = FaceIdentificator(self.face_embedding_vector, registered_embedding_vector)
-        degree_of_similarity = face_identificator.identfy()
-        print(f'degree of similarity is {degree_of_similarity:.4} between target and {face_vector_file}.')
+            # numpy to tensor
+            registered_embedding_vector = torch.from_numpy(registered_embedding_vector.astype(np.float32)).clone()
+            
+            face_identificator = FaceIdentificator(self.face_embedding_vector, registered_embedding_vector)
+            degree_of_similarity = face_identificator.identfy()
+            degree_of_similarity_list.append(degree_of_similarity)
+            
+        return max(degree_of_similarity_list)
 
 
