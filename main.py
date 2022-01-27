@@ -28,6 +28,7 @@ def main():
     threshold = config['threshold_of_frame_difference_method']
     mask_threshold = config['threshold_of_number_of_white_pixel']
     threshold_of_degree_of_similarity = config['threshold_of_degree_of_similarity']
+    threshold_of_degree_of_similarity_with_akaze = config['threshold_of_degree_of_similarity_with_akaze']
     degree_of_similarity = 0
     # load env
     load_dotenv(verbose=True)
@@ -85,14 +86,12 @@ def main():
                 haar_detector = HaarFaceDetector('./models/haarcascade_frontalface_default.xml')
                 cropped_face_img = haar_detector.getFaceImage(curr_img)
                 if cropped_face_img is not None:
-                    break
-                # TODO Template needs to be specified.
-                degree_of_similarity = get_face_similarity(cropped_face_img, "")
-                
-                pass
-            print(degree_of_similarity)
-            if degree_of_similarity < threshold_of_degree_of_similarity:
-                msg = '不審者発見'
+                    # TODO Template needs to be specified.
+                    degree_of_similarity = get_face_similarity(cropped_face_img, "images/akaze_template/*")
+                    
+                print(degree_of_similarity)
+                if degree_of_similarity > threshold_of_degree_of_similarity_with_akaze:
+                    msg = '不審者発見'
                 # line_sender = LineSender(LINE_ACCESS_TOKEN, LINE_USER_ID)
                 # line_sender.send_to_line(msg)
 
