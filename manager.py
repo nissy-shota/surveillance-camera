@@ -44,6 +44,7 @@ class FaceIdentificationManager:
             
             face_identificator = FaceIdentificator(self.face_embedding_vector, registered_embedding_vector)
             degree_of_similarity = face_identificator.identfy()
+            print(degree_of_similarity)
             degree_of_similarity_list.append(degree_of_similarity)
             
         return max(degree_of_similarity_list)

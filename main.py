@@ -69,9 +69,8 @@ def main():
         cv2.rectangle(mask, (int(width/3)*2, 0), (width, height), 0, thickness=-1, lineType=cv2.LINE_AA, shift=0)
         mask[mask < threshold] = 0
         mask[mask >= threshold] = 255
-        # cv2.imshow("mask", mask)
+        cv2.imshow("mask", mask)
         number_of_white_pixel = mask.sum()
-        
         
         if already_executed == True and number_of_white_pixel < 5000000:
             already_executed = False
@@ -151,7 +150,6 @@ def main():
 
     cv2.destroyAllWindows()
     cap.release()
-
 
 if __name__ == "__main__":
     # regist()
