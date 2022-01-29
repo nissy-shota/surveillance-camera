@@ -13,6 +13,11 @@ def get_face_similarity(target_image, template_dir):
     
     # BFMatcherオブジェクトの生成
     bf = cv2.BFMatcher(cv2.NORM_HAMMING)
+    
+    height, width, channels = target_image.shape[:3]
+    if height < 200 or width < 200:
+        return -1
+    
     target_image = cv2.resize(target_image, IMG_SIZE)
     # 顔画像の入力（カラー）
     target_image = cv2.cvtColor(target_image, cv2.COLOR_BGR2GRAY)

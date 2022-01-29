@@ -54,5 +54,4 @@ class FaceDetector:
         '''
         detected_img = self.img_cropped.to('cpu').detach().numpy().copy()
         self.detected_img = np.transpose(detected_img, (1, 2, 0))
-        plt.imshow(self.detected_img)
         plt.show()

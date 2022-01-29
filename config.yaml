@@ -1,5 +1,5 @@
 threshold_of_frame_difference_method: 30
-threshold_of_number_of_white_pixel: 1
+threshold_of_number_of_white_pixel: 9000000
 threshold_of_degree_of_similarity: 0.7
 threshold_of_degree_of_similarity_with_akaze: 141.0
 sampling_cycle: 1

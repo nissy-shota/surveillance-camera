@@ -2,7 +2,7 @@
 import argparse
 from distutils.command import register
 import gc
-from multiprocessing import managers
+from multiprocessing import connection, managers
 import os
 import sys
 
@@ -49,24 +49,40 @@ def main():
         return
 
     counter = 0
+    frame_counter = 0
+    already_executed = True
     while True:
 
         if counter == 0:
             _, prev_img = cap.read()
             prev_gray = cv2.cvtColor(prev_img, cv2.COLOR_BGR2GRAY)
+            back = cv2.imread("./images/back.jpg", cv2.IMREAD_GRAYSCALE)
+            height, width, channels = prev_img.shape[:3]
             counter += 1
             continue
 
         _, curr_img = cap.read()
         curr_gray = cv2.cvtColor(curr_img, cv2.COLOR_BGR2GRAY)
         # create mask
-        mask = cv2.absdiff(curr_gray, prev_gray)
+        mask = cv2.absdiff(curr_gray, back)
+        cv2.rectangle(mask, (0, 0), (int(width/3), height), 0, thickness=-1, lineType=cv2.LINE_AA, shift=0)
+        cv2.rectangle(mask, (int(width/3)*2, 0), (width, height), 0, thickness=-1, lineType=cv2.LINE_AA, shift=0)
         mask[mask < threshold] = 0
         mask[mask >= threshold] = 255
+        # cv2.imshow("mask", mask)
         number_of_white_pixel = mask.sum()
-
+        
+        
+        if already_executed == True and number_of_white_pixel < 5000000:
+            already_executed = False
+            frame_counter = 0
+            print("Reset")
+        
         if number_of_white_pixel > mask_threshold:
-            cv2.imshow("curr_img", curr_img)
+            frame_counter += 1
+        
+        if number_of_white_pixel > mask_threshold and already_executed == False and frame_counter > 60:
+            
             # Deep
             if is_deep:
                 # face detection
@@ -96,6 +112,9 @@ def main():
                     # line_sender = LineSender(LINE_ACCESS_TOKEN, LINE_USER_ID)
                     # line_sender.send_to_line(msg)
                     print(msg)
+                
+                already_executed = True
+                cv2.imshow("curr", curr_img)
             else:
                 '''
                 TODO Shoma Kato: Develop classical detection, recognition and identification algorithm.
@@ -105,12 +124,22 @@ def main():
                 if cropped_face_img is not None:
                     # TODO Template needs to be specified.
                     degree_of_similarity = get_face_similarity(cropped_face_img, "images/akaze_template/*")
-                    
+                
+                if degree_of_similarity == 0 or degree_of_similarity == -1:
+                    continue
+                
+                if cropped_face_img is None:
+                    continue
+                
                 print(degree_of_similarity)
                 if degree_of_similarity > threshold_of_degree_of_similarity_with_akaze:
                     msg = '不審者発見'
+
+                    print(msg)
                 # line_sender = LineSender(LINE_ACCESS_TOKEN, LINE_USER_ID)
                 # line_sender.send_to_line(msg)
+                already_executed = True
+                cv2.imshow("curr", curr_img)
 
         prev_gray = curr_gray
         del curr_gray
