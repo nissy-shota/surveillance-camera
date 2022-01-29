@@ -5,10 +5,43 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Flask App</title>
 </head>
+<style>
+    h2 {
+        color: green;
+    }
+    .btn {
+        width: 300px;
+        height: 100px;
+        line-height: 100px;
+        background-color: green;
+        border-radius: 30px;
+        color: #fff;
+        text-align: center;
+    }
+    .link:visited{
+        color: white;
+    }
+
+    a{
+        text-decoration: none;
+        font-size: 20px;
+        font-weight: bold;
+    }
+</style>
 <body>
-<p>Flask</p>
-<form action="/capture" id="conf1" method="POST">
-    <p><a href="/capture">監視画面へ</a></p>
-</form>
+    <div id = "center">
+        <h2>Security System</h2>
+        <form action="/capture_deep" class="btn" method="POST">
+            <p><a class="link" href="/capture_deep">Facenet mode</a></p>
+        </form>
+
+        <form action="/capture_akaze" class="btn" method="POST">
+            <p><a class="link" href="/capture_akaze">Akaze mode</a></p>
+        </form>
+
+        <form action="/capture_back_image" class="btn" method="POST">
+            <p><a class="link" href="/capture_back_image">Capture back</a></p>
+        </form>
+    </div>
 </body>
 </html>

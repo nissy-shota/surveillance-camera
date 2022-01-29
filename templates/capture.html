@@ -5,7 +5,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Flask App</title>
 </head>
+<style>
+    h2 {
+        color: green;
+    }
+    .btn {
+        width: 100px;
+        height: 50px;
+        line-height: 50px;
+        background-color: green;
+        border-radius: 30px;
+        color: #fff;
+        text-align: center;
+    }
+    .link:visited{
+        color: white;
+    }
+
+    a{
+        text-decoration: none;
+        font-size: 20px;
+        color: white;
+        font-weight: bold;
+    }
+</style>
 <body>
-<p>監視中</p>
+<h2>監視中!!</h2>
+<form action="/return_top" class="btn" method="POST">
+    <p><a class="link" href="/return_top">戻る</a></p>
+</form>
 </body>
 </html>
